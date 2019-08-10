@@ -7,13 +7,48 @@
 </head>
 
 <body>
+  <h1>Draw something...</h1>
   <canvas id="draw" width="800" height="800"></canvas>
+  <button id="clear-btn">Clear</button>
+  <style>
+    html {
+      font-family: 'courier';
+      text-align: center;
+      font-size: 2em;
+      color: black;
+      background-color: #86e9ff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #draw {
+      border: 2px solid black;
+      background-color: white;
+      border-radius: 5px;
+    }
+
+    #clear-btn {
+      margin: 20px;
+      background-color: #f0d264;
+      display: block;
+      margin: auto;
+      height: 50px;
+      width: 150px;
+      border-radius: 5px;
+      color: black;
+      font-size: 20px;
+      margin-top: 10px;
+    }
+  </style>
   <script>
     const canvas = document.querySelector("#draw");
     const cntxt = canvas.getContext("2d");
+    const clearBtn = document.querySelector("#clear-btn");
 
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth * 0.8;
+    canvas.height = window.innerHeight * 0.7;
 
     cntxt.strokeStyle = "#BADA55";
     cntxt.lineJoin = "round";
@@ -23,6 +58,7 @@
     let lastX = 0;
     let lastY = 0;
     let hue = 0;
+
 
     function draw(e) {
       if (!isDrawing) return;
@@ -49,13 +85,16 @@
       }
     }
 
+    clearBtn.addEventListener("click", () => {
+      cntxt.clearRect(0, 0, canvas.width, canvas.height);
+    })
     canvas.addEventListener("mousemove", draw);
     canvas.addEventListener("mousedown", (e) => {
       [lastX, lastY] = [e.offsetX, e.offsetY]
       isDrawing = true
     });
     canvas.addEventListener("mouseup", () => isDrawing = false);
-    canvas.addEventListener("mouseout", () => isDrawing = false);
+    // canvas.addEventListener("mouseout", () => isDrawing = false);
   </script>
 
   <style>
